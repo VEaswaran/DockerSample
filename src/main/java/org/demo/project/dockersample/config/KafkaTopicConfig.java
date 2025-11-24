@@ -29,5 +29,35 @@ public class KafkaTopicConfig {
             throw e;
         }
     }
+
+    @Bean
+    public NewTopic retryEventTopic() {
+        String retryTopicName = "EM.retrytopic";
+        logger.info("Creating Kafka retry topic bean: {}", retryTopicName);
+        try {
+            return TopicBuilder.name(retryTopicName)
+                    .partitions(3)
+                    .replicas(1)
+                    .build();
+        } catch (Exception e) {
+            logger.warn("Failed to create Kafka retry topic bean: {}", e.getMessage());
+            throw e;
+        }
+    }
+
+    @Bean
+    public NewTopic falloutEventTopic() {
+        String falloutTopicName = "EM.fallout-final";
+        logger.info("Creating Kafka fallout topic bean: {}", falloutTopicName);
+        try {
+            return TopicBuilder.name(falloutTopicName)
+                    .partitions(3)
+                    .replicas(1)
+                    .build();
+        } catch (Exception e) {
+            logger.warn("Failed to create Kafka fallout topic bean: {}", e.getMessage());
+            throw e;
+        }
+    }
 }
 
